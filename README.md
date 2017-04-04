@@ -4,6 +4,10 @@ Implementations of generic data tables with sorting and filtering are surprising
 
 At present, it provides no default styling, is incredibly non-performant, but implements a few key features.
 
+## Warning: Early Stages
+
+The API may change on any particular day. I'm hoping to use this in a production project at some point, so I hope this lib will keep getting updates, but no guarantees. I don't think this is ready for production yet, anyway... the sorting and filtering is run right in the render thread right now.
+
 ## Usage
 
 ### Configuring your Store
