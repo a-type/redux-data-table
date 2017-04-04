@@ -33,6 +33,7 @@ const store = createStore(
 ### Using the Table
 
 ```js
+// all props are optional
 <Table
   renderTable={customRenderTable}
   renderRow={customRenderRow}
