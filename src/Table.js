@@ -56,7 +56,7 @@ class ReduxTable extends React.Component {
     headers: React.PropTypes.arrayOf(React.PropTypes.string),
 
     sort: React.PropTypes.objectOf(React.PropTypes.func),
-    showSort: React.PropTypes.bool,
+    showFilter: React.PropTypes.bool,
 
     selectDataKey: React.PropTypes.func,
 
@@ -79,7 +79,7 @@ class ReduxTable extends React.Component {
     data: [],
     headers: null,
     sort: {},
-    showSort: true,
+    showFilter: true,
 
     selectDataKey: (data) => data.id || data.name || JSON.stringify(data),
   };
@@ -106,6 +106,7 @@ class ReduxTable extends React.Component {
       renderCell,
       renderHeader,
       renderFilter,
+      showFilter,
       data,
       sort,
       headers,
@@ -134,7 +135,7 @@ class ReduxTable extends React.Component {
 
     return (
       <div>
-        {renderFilter({ filterText, onChange: this.onFilterChange })}
+        {showFilter ? renderFilter({ filterText, onChange: this.onFilterChange }) : null}
         {renderTable({
           data: sortedData,
           headers: finalHeaders,
