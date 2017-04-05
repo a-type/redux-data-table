@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as actions from './actions';
 import DefaultTable from './components/Table';
 import DefaultRow from './components/Row';
 import DefaultCell from './components/Cell';
@@ -6,9 +8,11 @@ import DefaultHeader from './components/Header';
 import DefaultFilter from './components/Filter';
 import DefaultPagination from './components/Pagination';
 
-export default class ReduxTable extends React.Component {
+class ReduxTable extends React.Component {
   static propTypes = {
     // user props
+    tableName: React.PropTypes.string.isRequired,
+
     Table: React.PropTypes.func,
     Row: React.PropTypes.func,
     Cell: React.PropTypes.func,
@@ -62,7 +66,7 @@ export default class ReduxTable extends React.Component {
   };
 
   componentDidMount() {
-    this.props.init();
+    this.props.init({ tableName: this.props.tableName });
     this.onDirty(this.props);
   }
 
@@ -77,26 +81,26 @@ export default class ReduxTable extends React.Component {
   }
 
   onHeaderClick = (key) => {
-    const { sortOrder, sortKey, changeSort } = this.props;
+    const { sortOrder, sortKey, changeSort, tableName } = this.props;
 
     if (sortKey === key) {
-      changeSort({ sortKey: key, sortOrder: -sortOrder });
+      changeSort({ tableName, sortKey: key, sortOrder: -sortOrder });
     } else {
-      changeSort({ sortKey: key, sortOrder: 1 });
+      changeSort({ tableName, sortKey: key, sortOrder: 1 });
     }
   };
 
   onFilterChange = (event) => {
     const { changeFilterText } = this.props;
-    changeFilterText({ filterText: event.target.value });
+    changeFilterText({ tableName, filterText: event.target.value });
   };
 
-  onDirty = ({ data, sortOrder, sortKey, filterText, sortData }) => {
-    sortData({ data, sortOrder, sortKey, filterText });
+  onDirty = ({ data, sortOrder, sortKey, filterText, sortData, tableName }) => {
+    sortData({ tableName, data, sortOrder, sortKey, filterText });
   };
 
   onPageChange = (pageNumber) => {
-    this.props.goToPage({ pageNumber, pageSize: this.props.pageSize });
+    this.props.goToPage({ tableName, pageNumber, pageSize: this.props.pageSize });
   };
 
   render() {
@@ -171,3 +175,25 @@ export default class ReduxTable extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => state.tables[ownProps.tableName] ? {
+  sortKey: state.tables[ownProps.tableName].sortKey,
+  sortOrder: state.tables[ownProps.tableName].sortOrder,
+  filterText: state.tables[ownProps.tableName].filterText,
+  sortedData: state.tables[ownProps.tableName].sortedData,
+  sorting: state.tables[ownProps.tableName].sorting,
+  currentPage: state.tables[ownProps.tableName].currentPage,
+} : {};
+
+const mapDispatchToProps = (dispatch) => ({
+  init: ({ tableName }) => dispatch(actions.init({ tableName })),
+  changeSort: ({ tableName, sortKey, sortOrder }) => dispatch(actions.changeSort({ tableName, sortKey, sortOrder })),
+  changeFilterText: ({ tableName, filterText }) => dispatch(actions.changeFilterText({ tableName, filterText })),
+  sortData: ({ tableName, data, sortKey, sortOrder, filterText }) => dispatch(actions.sortData({ tableName, data, sortKey, sortOrder, filterText })),
+  goToPage: ({ tableName, pageNumber, pageSize }) => dispatch(actions.changePage({ tableName, pageNumber, pageSize })),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReduxTable);

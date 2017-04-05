@@ -35,10 +35,11 @@ const store = createStore(
 ### Using the Table
 
 ```js
-import { createTable } from 'redux-data-table';
-const Table = createTable({ tableName: 'foo' });
+import { ReduxTable } from 'redux-data-table';
 // all props are optional
-<Table
+<ReduxTable
+  tableName="example"
+
   Table={CustomTable}
   Row={CustomRow}
   Cell={CustomCell}
@@ -105,6 +106,12 @@ Props: `{ currentPage, goToPage }`
 When writing your own pagination component, if you'd like to provide a text input to jump to a particular page, you'll need to just store that in the component state. redux-form doesn't keep track of a value for that kind of input. Feel free to pull the value from the `currentPage` props when the props change, so that your input will react to changes.
 
 ## Data Props
+
+### tableName
+
+**Required**
+
+A unique key for your table. This key will be used to store the table's state in the Redux store. Don't leave home without it!
 
 ### data
 

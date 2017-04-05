@@ -1,3 +1,9 @@
-import createTable from '../src/createTable';
+import React from 'react';
+import Table from '../src/ReduxTable';
 
-export default createTable({ tableName: 'exampleTable' });
+export default (props) => (
+  <Table
+    {...props}
+    tableName="example"
+  />
+);
