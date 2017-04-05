@@ -46,6 +46,7 @@ const Table = createTable({ tableName: 'foo' });
   Cell={CustomCell}
   Header={CustomHeader}
   Filter={CustomFilter}
+  Pagination={CustomPagination}
 
   data={arrayOfData}
   captionKeys={orderedArrayOfKeys}
@@ -94,6 +95,16 @@ Props: `{ filterText, handleChange, sorting }`
 `filterText` is the controlled value of the filter text, put this on an `input`'s `value`. `handleChange` should be called whenever the `input` changes to update the filter.
 
 `sorting` is the same as `Table`; a boolean that indicates if the table is currently sorting.
+
+### Pagination
+
+Props: `{ currentPage, goToPage }`
+
+`currentPage` is the index of the current page. Note that, if you change the filter state, the current page will reset to 0. This is to prevent filters from reducing the result size such that no results are visible on the current page, even if some results are present.
+
+`goToPage` accepts an integer page number. Compute your page using the `currentPage` value. Negative page numbers will wrap to the end of the page list. For instance, `-1` is the last page.
+
+When writing your own pagination component, if you'd like to provide a text input to jump to a particular page, you'll need to just store that in the component state. redux-form doesn't keep track of a value for that kind of input. Feel free to pull the value from the `currentPage` props when the props change, so that your input will react to changes.
 
 ## Data Props
 
