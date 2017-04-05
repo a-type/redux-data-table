@@ -4,6 +4,7 @@ export const TYPES = {
   CHANGE_FILTER_TEXT: '@@redux-table_CHANGE_FILTER_TEXT',
   SORT_DATA: '@@redux-table_SORT_DATA',
   DATA_SORTED: '@@redux-table_DATA_SORTED',
+  CHANGE_PAGE: '@@redux-table_CHANGE_PAGE',
 };
 
 export const init = ({ tableName }) => ({
@@ -46,5 +47,13 @@ export const dataSorted = ({ tableName, sortedData }) => ({
   payload: {
     tableName,
     sortedData,
+  },
+});
+
+export const changePage = ({ tableName, pageNumber, pageSize }) => ({
+  type: TYPES.CHANGE_PAGE,
+  payload: {
+    tableName,
+    pageNumber,
   },
 });

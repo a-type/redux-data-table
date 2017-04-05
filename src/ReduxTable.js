@@ -4,6 +4,7 @@ import DefaultRow from './components/Row';
 import DefaultCell from './components/Cell';
 import DefaultHeader from './components/Header';
 import DefaultFilter from './components/Filter';
+import DefaultPagination from './components/Pagination';
 
 export default class ReduxTable extends React.Component {
   static propTypes = {
@@ -13,20 +14,25 @@ export default class ReduxTable extends React.Component {
     Cell: React.PropTypes.func,
     Header: React.PropTypes.func,
     Filter: React.PropTypes.func,
+    Pagination: React.PropTypes.func,
 
     data: React.PropTypes.arrayOf(React.PropTypes.object),
     columnKeys: React.PropTypes.arrayOf(React.PropTypes.string),
 
     selectDataKey: React.PropTypes.func,
 
+    pageSize: React.PropTypes.number,
+
     // redux props
     sortKey: React.PropTypes.string,
     sortOrder: React.PropTypes.number,
     filterText: React.PropTypes.string,
+    currentPage: React.PropTypes.number,
 
     init: React.PropTypes.func.isRequired,
     changeSort: React.PropTypes.func.isRequired,
     changeFilterText: React.PropTypes.func.isRequired,
+    goToPage: React.PropTypes.func.isRequired,
 
     sortedData: React.PropTypes.arrayOf(React.PropTypes.object),
   };
@@ -37,6 +43,7 @@ export default class ReduxTable extends React.Component {
     Cell: DefaultCell,
     Header: DefaultHeader,
     Filter: DefaultFilter,
+    Pagination: DefaultPagination,
 
     data: [],
     columnKeys: null,
@@ -45,10 +52,13 @@ export default class ReduxTable extends React.Component {
 
     selectDataKey: (data) => data.key || data.id || data.name || JSON.stringify(data),
 
+    pageSize: 10,
+
     sortKey: 'id',
     sortOrder: 1,
     filterText: '',
     sortedData: [],
+    currentPage: 0,
   };
 
   componentDidMount() {
@@ -85,6 +95,10 @@ export default class ReduxTable extends React.Component {
     sortData({ data, sortOrder, sortKey, filterText });
   };
 
+  onPageChange = (pageNumber) => {
+    this.props.goToPage({ pageNumber, pageSize: this.props.pageSize });
+  };
+
   render() {
     const {
       Table,
@@ -92,6 +106,7 @@ export default class ReduxTable extends React.Component {
       Cell,
       Header,
       Filter,
+      Pagination,
       showFilter,
       data,
       selectDataKey,
@@ -100,6 +115,8 @@ export default class ReduxTable extends React.Component {
       sortOrder,
       sortedData,
       sorting,
+      pageSize,
+      currentPage,
     } = this.props;
 
     const columnKeys = this.props.columnKeys || Object.keys(data[0] || {}) || [];
@@ -117,7 +134,7 @@ export default class ReduxTable extends React.Component {
         ))}
       </Row>
     );
-    const rows = sortedData.map((rowData, index) => (
+    const rows = sortedData.slice(pageSize * currentPage, pageSize * (currentPage + 1)).map((rowData, index) => (
       <Row index={index} key={selectDataKey(rowData)} sorting={sorting}>
         {columnKeys.map((key) => (
           <Cell
@@ -136,9 +153,16 @@ export default class ReduxTable extends React.Component {
         sorting={sorting}
       />
     );
+    const pagination = (
+      <Pagination
+        goToPage={this.onPageChange}
+        currentPage={currentPage}
+        />
+    );
 
     return (
       <Table
+        pagination={pagination}
         filter={filter}
         headers={headers}
         rows={rows}

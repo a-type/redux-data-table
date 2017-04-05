@@ -9,6 +9,7 @@ export default ({ tableName }) => {
     filterText: state.tables[tableName].filterText,
     sortedData: state.tables[tableName].sortedData,
     sorting: state.tables[tableName].sorting,
+    currentPage: state.tables[tableName].currentPage,
   } : {};
 
   const mapDispatchToProps = (dispatch) => ({
@@ -16,6 +17,7 @@ export default ({ tableName }) => {
     changeSort: ({ sortKey, sortOrder }) => dispatch(actions.changeSort({ tableName, sortKey, sortOrder })),
     changeFilterText: ({ filterText }) => dispatch(actions.changeFilterText({ tableName, filterText })),
     sortData: ({ data, sortKey, sortOrder, filterText }) => dispatch(actions.sortData({ tableName, data, sortKey, sortOrder, filterText })),
+    goToPage: ({ pageNumber, pageSize }) => dispatch(actions.changePage({ tableName, pageNumber, pageSize })),
   });
 
   return connect(

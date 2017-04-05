@@ -8,7 +8,16 @@ const defaultTableState = {
   filterText: '',
   sorting: false,
   sortedData: [],
+  currentPage: 0,
 };
+
+const calcNewPage = (dataSize, pageSize, newPage) => {
+  const numPages = dataSize / pageSize;
+  if (newPage < 0) {
+    return numPages + newPage;
+  }
+  return newPage;
+}
 
 export default function(state = defaultState, action) {
   switch (action.type) {
@@ -32,6 +41,7 @@ export default function(state = defaultState, action) {
         [action.payload.tableName]: {
           ...state[action.payload.tableName],
           filterText: action.payload.filterText,
+          currentPage: 0,
         }
       };
     case TYPES.SORT_DATA:
@@ -49,6 +59,18 @@ export default function(state = defaultState, action) {
           ...state[action.payload.tableName],
           sorting: false,
           sortedData: action.payload.sortedData,
+        }
+      };
+    case TYPES.CHANGE_PAGE:
+      return {
+        ...state,
+        [action.payload.tableName]: {
+          ...state[action.payload.tableName],
+          currentPage: calcNewPage(
+            state[action.payload.tableName].sortedData.length,
+            action.payload.pageSize,
+            action.payload.pageNumber
+          ),
         }
       };
     default:
