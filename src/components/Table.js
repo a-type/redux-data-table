@@ -1,7 +1,8 @@
 import React from 'react';
 
-const Table = ({ rows, headers, sorting }) => (
+const Table = ({ filter, rows, headers, sorting }) => (
   <table>
+    <caption style={{ textAlign: 'right' }}>{filter}</caption>
     <thead>
       {headers}
     </thead>

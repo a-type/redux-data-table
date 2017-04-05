@@ -17,8 +17,6 @@ export default class ReduxTable extends React.Component {
     data: React.PropTypes.arrayOf(React.PropTypes.object),
     columnKeys: React.PropTypes.arrayOf(React.PropTypes.string),
 
-    showFilter: React.PropTypes.bool,
-
     selectDataKey: React.PropTypes.func,
 
     // redux props
@@ -131,24 +129,21 @@ export default class ReduxTable extends React.Component {
         ))}
       </Row>
     ));
+    const filter = (
+      <Filter
+        filterText={filterText}
+        handleChange={this.onFilterChange}
+        sorting={sorting}
+      />
+    );
 
     return (
-      <div>
-        {
-          showFilter ?
-            <Filter
-              filterText={filterText}
-              handleChange={this.onFilterChange}
-              sorting={sorting}
-            /> :
-            null
-        }
-        <Table
-          headers={headers}
-          rows={rows}
-          sorting={sorting}
-        />
-      </div>
+      <Table
+        filter={filter}
+        headers={headers}
+        rows={rows}
+        sorting={sorting}
+      />
     );
   }
 }

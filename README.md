@@ -46,11 +46,7 @@ const store = createStore(
   Filter={CustomFilter}
 
   data={arrayOfData}
-  headers={orderedArrayOfKeys}
-
-  sort={keyedSortFunctions}
-  showFilter={showFilterInput}
-
+  captionKeys={orderedArrayOfKeys}
   selectDataKey={functionToProcessUniqueKeyFromRowData}
   />
 ```
@@ -59,9 +55,9 @@ const store = createStore(
 
 ### Table
 
-Props: `{ rows, headers, sorting }`
+Props: `{ filter, rows, headers, sorting }`
 
-`rows` and `headers` are rendered markup. `rows` is a list of `Row` elements (presumably `tr`s), `headers` is the rendered `Row` of `Header` elements (presumably one `tr`). Recommended layout is to render a `<table>` with a `<thead>` containing `headers` and a `<tbody>` containing `rows`.
+`filter`, `rows` and `headers` are rendered markup. `filter` is the rendered `Filter` component; place it wherever you like in your table. `rows` is a list of `Row` elements (presumably `tr`s), `headers` is the rendered `Row` of `Header` elements (presumably one `tr`). Recommended layout is to render a `<table>` with a `<thead>` containing `headers` and a `<tbody>` containing `rows`.
 
 `sorting` is a boolean which tells you if the table is in the process of sorting data. Use this to, for instance, render the body in such a way that it's clear there's work going on.
 
@@ -96,3 +92,19 @@ Props: `{ filterText, handleChange, sorting }`
 `filterText` is the controlled value of the filter text, put this on an `input`'s `value`. `handleChange` should be called whenever the `input` changes to update the filter.
 
 `sorting` is the same as `Table`; a boolean that indicates if the table is currently sorting.
+
+## Data Props
+
+### data
+
+This is an array of objects to represent in the table. Each object should have the same shape. Objects are preferrably flat key-value maps, where values are all renderable.
+
+redux-table has no opinions about how you get your data, and isn't concerned with whether or not the data is currently loading. It's possible the library could be extended to understand loading states, but currently the best approach is to only render a redux-table when data is ready, and render something else while things are loading.
+
+### columnKeys
+
+An array of string keys which correspond to the shape of your data. So if your data objects look like `{ a: 1, b: 2, c: 3 }`, you'd probably want to pass `['a', 'b', 'c']` as your `columnKeys`. You could remove columns from the table by only passing a subset of the keys in your data. By default, redux-table will try to infer your column keys once data is loaded by using the result of `Object.keys(data[0])`.
+
+### selectDataKey
+
+A function which is passed one of your data objects, and is expected to return a unique key to identify that object. For instance, if your data contains unique `id` props, your `selectDataKey` function might be `(data) => data.id`. But actually, the default behavior of redux-table would already work for you: first it tries `data.key`, then `data.id`, then `data.name`, and then it will stringify the whole data object. If your data doesn't have an `id`, `key`, or `name`, it's highly recommended you provide a `selectDataKey`.
