@@ -39,11 +39,11 @@ const store = createStore(
 ```js
 // all props are optional
 <Table
-  renderTable={customRenderTable}
-  renderRow={customRenderRow}
-  renderCell={customRenderCell}
-  renderHeader={customRenderHeader}
-  renderFilter={customRenderFilter}
+  Table={CustomTable}
+  Row={CustomRow}
+  Cell={CustomCell}
+  Header={CustomHeader}
+  Filter={CustomFilter}
 
   data={arrayOfData}
   headers={orderedArrayOfKeys}
@@ -55,14 +55,44 @@ const store = createStore(
   />
 ```
 
-## Custom Render Functions
+## Custom Presentational Components
 
-`renderTable({ data, renderRows, renderHeaders, headers })` : overrides the whole render process. Receives sorted and filtered data, and some of the other render functions you may provide.
+### Table
 
-`renderHeader({ key, onClick, sortOrder })` : expected to return markup for a header item (`<th>`). `key` is the column name. `onClick` should be attached to the element. `sortOrder` is an integer in `-1...1` indicating the sort order of this column, `0` if this column is not sorted.
+Props: `{ rows, headers, sorting }`
 
-`renderRow({ index, rowData, renderCell, selectDataKey, headers })` : overrides the row render process. `index` is the row number. `rowData` is the individual data item this row represents. `renderCell` is the function used to render markup for a single cell item. `selectDataKey` should return a unique data value when passed the `rowData`. `headers` are the column keys, in order. Use these to iterate and render your cells.
+`rows` and `headers` are rendered markup. `rows` is a list of `Row` elements (presumably `tr`s), `headers` is the rendered `Row` of `Header` elements (presumably one `tr`). Recommended layout is to render a `<table>` with a `<thead>` containing `headers` and a `<tbody>` containing `rows`.
 
-`renderCell = ({ key, value })` : expected to return markup for a table cell (`<td>`). `key` is the React key which should be applied to the element. `value` is the raw value the cell should represent.
+`sorting` is a boolean which tells you if the table is in the process of sorting data. Use this to, for instance, render the body in such a way that it's clear there's work going on.
 
-`renderFilter = ({ filterText, onChange })` : expected to return markup for the filter box. Filter input should be controlled, using `filterText` as the value, and the attached `onChange` handler.
+### Row
+
+Props: `{ index, children, sorting }`
+
+`index` is the index (line number) of this row. `-1` indicates the row is the header row. `children` are the contained `Cell` elements, presumably a list of `td`s.
+
+`sorting` is the same as `Table`; a boolean that indicates if the table is currently sorting.
+
+### Cell
+
+Props: `{ value, columnKey, sorting }`
+
+`value` is the raw value fetched from the data object for this column key. If it's not renderable, you'll need to do the logic to make it so. `columnKey` is provided to tell you what column this `Cell` is being rendered in to aid your rendering logic. A suggested pattern if you have custom per-column rendering needs is to create several specialized Cell components and have your main `Cell` component selectively render these based on `columnKey`.
+
+`sorting` is the same as `Table`; a boolean that indicates if the table is currently sorting.
+
+### Header
+
+Props: `{ columnKey, handleClick, sortOrder, sorting }`
+
+`columnKey` is the key for this column. You might render this directly, or prettify it somehow. `handleClick` must be attached to your element in order for clicking it to toggle column sorting. `sortOrder` indicates the sort order of this header's column. It's `0` if the table is not being sorted on this column, otherwise it's `1` or `-1`.
+
+`sorting` is the same as `Table`; a boolean that indicates if the table is currently sorting.
+
+### Filter
+
+Props: `{ filterText, handleChange, sorting }`
+
+`filterText` is the controlled value of the filter text, put this on an `input`'s `value`. `handleChange` should be called whenever the `input` changes to update the filter.
+
+`sorting` is the same as `Table`; a boolean that indicates if the table is currently sorting.

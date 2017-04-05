@@ -1,3 +1,7 @@
-import styled from 'styled-components';
+import React from 'react';
 
-export default styled.tr``;
+const Row = ({ index, children }) => (
+  <tr>{children}</tr>
+);
+
+export default Row;

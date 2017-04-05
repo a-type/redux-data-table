@@ -1,12 +1,7 @@
 import React from 'react';
 
-export default class Filter extends React.Component {
-  static propTypes = {
-    filterText: React.PropTypes.string.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-  };
+const Filter = ({ filterText, handleChange }) => (
+  <input onChange={handleChange} value={filterText} type="text" />
+);
 
-  render() {
-    return <input onChange={this.props.onChange} value={this.props.filterText} type="text" />;
-  }
-}
+export default Filter;

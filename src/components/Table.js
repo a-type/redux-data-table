@@ -1,3 +1,14 @@
-import styled from 'styled-components';
+import React from 'react';
 
-export default styled.table``;
+const Table = ({ rows, headers, sorting }) => (
+  <table>
+    <thead>
+      {headers}
+    </thead>
+    <tbody style={{ opacity: sorting ? 0.5 : 1 }}>
+      {rows}
+    </tbody>
+  </table>
+);
+
+export default Table;

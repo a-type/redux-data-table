@@ -1,3 +1,7 @@
-import styled from 'styled-components';
+import React from 'react';
 
-export default styled.td``;
+const Cell = ({ value, columnKey }) => (
+  <td>{'' + value}</td>
+);
+
+export default Cell;

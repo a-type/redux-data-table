@@ -1,3 +1,3 @@
-import Table from '../src/Table';
+import createTable from '../src/createTable';
 
-export default Table;
+export default createTable({ tableName: 'exampleTable' });

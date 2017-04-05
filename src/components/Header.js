@@ -1,5 +1,11 @@
-import styled from 'styled-components';
+import React from 'react';
+import SortArrow from './SortArrow';
 
-export default styled.th`
-  cursor: pointer;
-`;
+const Header = ({ columnKey, handleClick, sortOrder }) => (
+  <th style={{ cursor: 'pointer' }} onClick={handleClick}>
+    {columnKey}
+    <SortArrow order={sortOrder} />
+  </th>
+);
+
+export default Header;
