@@ -37,6 +37,8 @@ const store = createStore(
 ### Using the Table
 
 ```js
+import { createTable } from 'redux-table';
+const Table = createTable({ tableName: 'foo' });
 // all props are optional
 <Table
   Table={CustomTable}
