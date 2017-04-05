@@ -11,8 +11,8 @@
   "author": "Grant <gaforres@gmail.com>",
   "license": "ISC",
   "peerDependencies": {
-    "react": "^14.0",
-    "react-dom": "^14.0"
+    "react": "^14.0.0 || ^15.0.0",
+    "react-dom": "^14.0.0 || ^15.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
