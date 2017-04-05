@@ -1,5 +1,5 @@
 {
-  "name": "redux-table",
+  "name": "redux-data-table",
   "version": "1.0.1",
   "description": "React-Redux Integrated DataTable",
   "main": "src/index.js",
