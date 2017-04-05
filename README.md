@@ -2,11 +2,9 @@
 
 Implementations of generic data tables with sorting and filtering are surprisingly hard to find in the React+Redux ecosystem. Here's a go at one.
 
-At present, it provides no default styling, is incredibly non-performant, but implements a few key features.
+redux-table is designed to be easy to use, but not necessarily performant or opinionated. To get a basic table, you can go ahead and jump right in by passing only a `data` prop to your created form and see how it works. Most of the customization revolves around syling the presentational components of the table.
 
-## Warning: Early Stages
-
-The API may change on any particular day. I'm hoping to use this in a production project at some point, so I hope this lib will keep getting updates, but no guarantees. I don't think this is ready for production yet, anyway... the sorting and filtering is run right in the render thread right now.
+Under the hood, redux-table prefers to use a WebWorker to sort your data, so it will hopefully be able to keep up with large data sets. This may not be an optimal solution in real life usage, though. Perhaps you'd like to fork and PR a new sorting method? It's all in `middleware.js`.
 
 ## Usage
 
