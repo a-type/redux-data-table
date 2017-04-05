@@ -1,10 +1,10 @@
-# redux-table
+# redux-data-table
 
 Implementations of generic data tables with sorting and filtering are surprisingly hard to find in the React+Redux ecosystem. Here's a go at one.
 
-redux-table is designed to be easy to use, but not necessarily performant or opinionated. To get a basic table, you can go ahead and jump right in by passing only a `data` prop to your created form and see how it works. Most of the customization revolves around syling the presentational components of the table.
+redux-data-table is designed to be easy to use, but not necessarily performant or opinionated. To get a basic table, you can go ahead and jump right in by passing only a `data` prop to your created form and see how it works. Most of the customization revolves around syling the presentational components of the table.
 
-Under the hood, redux-table prefers to use a WebWorker to sort your data, so it will hopefully be able to keep up with large data sets. This may not be an optimal solution in real life usage, though. Perhaps you'd like to fork and PR a new sorting method? It's all in `middleware.js`.
+Under the hood, redux-data-table prefers to use a WebWorker to sort your data, so it will hopefully be able to keep up with large data sets. This may not be an optimal solution in real life usage, though. Perhaps you'd like to fork and PR a new sorting method? It's all in `middleware.js`.
 
 ## Usage
 
@@ -12,7 +12,7 @@ Under the hood, redux-table prefers to use a WebWorker to sort your data, so it 
 
 ```js
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import { Table, reducer as tableReducer, middleware } from 'redux-table';
+import { Table, reducer as tableReducer, middleware } from 'redux-data-table';
 
 const middlewares = [
   middleware,
@@ -35,7 +35,7 @@ const store = createStore(
 ### Using the Table
 
 ```js
-import { createTable } from 'redux-table';
+import { createTable } from 'redux-data-table';
 const Table = createTable({ tableName: 'foo' });
 // all props are optional
 <Table
@@ -110,12 +110,12 @@ When writing your own pagination component, if you'd like to provide a text inpu
 
 This is an array of objects to represent in the table. Each object should have the same shape. Objects are preferrably flat key-value maps, where values are all renderable.
 
-redux-table has no opinions about how you get your data, and isn't concerned with whether or not the data is currently loading. It's possible the library could be extended to understand loading states, but currently the best approach is to only render a redux-table when data is ready, and render something else while things are loading.
+redux-data-table has no opinions about how you get your data, and isn't concerned with whether or not the data is currently loading. It's possible the library could be extended to understand loading states, but currently the best approach is to only render a redux-data-table when data is ready, and render something else while things are loading.
 
 ### columnKeys
 
-An array of string keys which correspond to the shape of your data. So if your data objects look like `{ a: 1, b: 2, c: 3 }`, you'd probably want to pass `['a', 'b', 'c']` as your `columnKeys`. You could remove columns from the table by only passing a subset of the keys in your data. By default, redux-table will try to infer your column keys once data is loaded by using the result of `Object.keys(data[0])`.
+An array of string keys which correspond to the shape of your data. So if your data objects look like `{ a: 1, b: 2, c: 3 }`, you'd probably want to pass `['a', 'b', 'c']` as your `columnKeys`. You could remove columns from the table by only passing a subset of the keys in your data. By default, redux-data-table will try to infer your column keys once data is loaded by using the result of `Object.keys(data[0])`.
 
 ### selectDataKey
 
-A function which is passed one of your data objects, and is expected to return a unique key to identify that object. For instance, if your data contains unique `id` props, your `selectDataKey` function might be `(data) => data.id`. But actually, the default behavior of redux-table would already work for you: first it tries `data.key`, then `data.id`, then `data.name`, and then it will stringify the whole data object. If your data doesn't have an `id`, `key`, or `name`, it's highly recommended you provide a `selectDataKey`.
+A function which is passed one of your data objects, and is expected to return a unique key to identify that object. For instance, if your data contains unique `id` props, your `selectDataKey` function might be `(data) => data.id`. But actually, the default behavior of redux-data-table would already work for you: first it tries `data.key`, then `data.id`, then `data.name`, and then it will stringify the whole data object. If your data doesn't have an `id`, `key`, or `name`, it's highly recommended you provide a `selectDataKey`.
