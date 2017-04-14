@@ -48,7 +48,7 @@ import { ReduxTable } from 'redux-data-table';
   Pagination={CustomPagination}
 
   data={arrayOfData}
-  captionKeys={orderedArrayOfKeys}
+  columnKeys={orderedArrayOfKeys}
   selectDataKey={functionToProcessUniqueKeyFromRowData}
   />
 ```
