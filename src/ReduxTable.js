@@ -1,5 +1,4 @@
 import React from 'react';
-import * as actions from './actions';
 import DefaultTable from './components/Table';
 import DefaultRow from './components/Row';
 import DefaultCell from './components/Cell';
