@@ -2,14 +2,21 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import ReduxTable from '../ReduxTable';
 
-const mapStateToProps = (state, ownProps) => state.get('tables')[ownProps.tableName] ? {
-  sortKey: state.tables[ownProps.tableName].sortKey,
-  sortOrder: state.tables[ownProps.tableName].sortOrder,
-  filterText: state.tables[ownProps.tableName].filterText,
-  sortedData: state.tables[ownProps.tableName].sortedData,
-  sorting: state.tables[ownProps.tableName].sorting,
-  currentPage: state.tables[ownProps.tableName].currentPage,
-} : {};
+const mapStateToProps = (state, ownProps) => {
+  const tables = state.get('tables');
+  if (tables[ownProps.tableName]) {
+    return {
+      sortKey: tables[ownProps.tableName].sortKey,
+      sortOrder: tables[ownProps.tableName].sortOrder,
+      filterText: tables[ownProps.tableName].filterText,
+      sortedData: tables[ownProps.tableName].sortedData,
+      sorting: tables[ownProps.tableName].sorting,
+      currentPage: tables[ownProps.tableName].currentPage,
+    };
+  } else {
+    return {};
+  }
+};
 
 const mapDispatchToProps = (dispatch) => ({
   init: ({ tableName }) => dispatch(actions.init({ tableName })),
