@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import * as actions from './actions';
+import * as actions from '../actions';
 import ReduxTable from '../ReduxTable';
 
 const mapStateToProps = (state, ownProps) => state.get('tables')[ownProps.tableName] ? {
