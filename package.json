@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "async": "^2.3.0",
+    "immutable": "^3.8.1",
     "lodash": "^4.17.4"
   }
 }

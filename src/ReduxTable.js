@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import * as actions from './actions';
 import DefaultTable from './components/Table';
 import DefaultRow from './components/Row';
@@ -8,7 +7,7 @@ import DefaultHeader from './components/Header';
 import DefaultFilter from './components/Filter';
 import DefaultPagination from './components/Pagination';
 
-class ReduxTable extends React.Component {
+export default class ReduxTable extends React.Component {
   static propTypes = {
     // user props
     tableName: React.PropTypes.string.isRequired,
@@ -175,25 +174,3 @@ class ReduxTable extends React.Component {
     );
   }
 }
-
-const mapStateToProps = (state, ownProps) => state.tables[ownProps.tableName] ? {
-  sortKey: state.tables[ownProps.tableName].sortKey,
-  sortOrder: state.tables[ownProps.tableName].sortOrder,
-  filterText: state.tables[ownProps.tableName].filterText,
-  sortedData: state.tables[ownProps.tableName].sortedData,
-  sorting: state.tables[ownProps.tableName].sorting,
-  currentPage: state.tables[ownProps.tableName].currentPage,
-} : {};
-
-const mapDispatchToProps = (dispatch) => ({
-  init: ({ tableName }) => dispatch(actions.init({ tableName })),
-  changeSort: ({ tableName, sortKey, sortOrder }) => dispatch(actions.changeSort({ tableName, sortKey, sortOrder })),
-  changeFilterText: ({ tableName, filterText }) => dispatch(actions.changeFilterText({ tableName, filterText })),
-  sortData: ({ tableName, data, sortKey, sortOrder, filterText }) => dispatch(actions.sortData({ tableName, data, sortKey, sortOrder, filterText })),
-  goToPage: ({ tableName, pageNumber, pageSize }) => dispatch(actions.changePage({ tableName, pageNumber, pageSize })),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ReduxTable);
