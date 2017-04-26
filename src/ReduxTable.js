@@ -89,7 +89,7 @@ export default class ReduxTable extends React.Component {
   };
 
   onFilterChange = (event) => {
-    const { changeFilterText } = this.props;
+    const { changeFilterText, tableName } = this.props;
     changeFilterText({ tableName, filterText: event.target.value });
   };
 
@@ -98,7 +98,8 @@ export default class ReduxTable extends React.Component {
   };
 
   onPageChange = (pageNumber) => {
-    this.props.goToPage({ tableName, pageNumber, pageSize: this.props.pageSize });
+    const { goToPage, pageSize, tableName } = this.props;
+    goToPage({ tableName, pageNumber, pageSize });
   };
 
   render() {
