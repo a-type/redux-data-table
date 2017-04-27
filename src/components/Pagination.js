@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Pagination extends React.Component {
   static propTypes = {
-    currentPage: React.PropTypes.number.isRequired,
-    goToPage: React.PropTypes.func.isRequired,
+    currentPage: PropTypes.number.isRequired,
+    goToPage: PropTypes.func.isRequired,
   };
 
   constructor(props) {

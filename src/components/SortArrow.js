@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class SortArrow extends React.Component {
   static propTypes = {
-    order: React.PropTypes.number,
+    order: PropTypes.number,
   };
 
   static defaultProps = {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import DefaultTable from './components/Table';
 import DefaultRow from './components/Row';
 import DefaultCell from './components/Cell';
@@ -9,34 +10,34 @@ import DefaultPagination from './components/Pagination';
 export default class ReduxTable extends React.Component {
   static propTypes = {
     // user props
-    tableName: React.PropTypes.string.isRequired,
+    tableName: PropTypes.string.isRequired,
 
-    Table: React.PropTypes.func,
-    Row: React.PropTypes.func,
-    Cell: React.PropTypes.func,
-    Header: React.PropTypes.func,
-    Filter: React.PropTypes.func,
-    Pagination: React.PropTypes.func,
+    Table: PropTypes.func,
+    Row: PropTypes.func,
+    Cell: PropTypes.func,
+    Header: PropTypes.func,
+    Filter: PropTypes.func,
+    Pagination: PropTypes.func,
 
-    data: React.PropTypes.arrayOf(React.PropTypes.object),
-    columnKeys: React.PropTypes.arrayOf(React.PropTypes.string),
+    data: PropTypes.arrayOf(PropTypes.object),
+    columnKeys: PropTypes.arrayOf(PropTypes.string),
 
-    selectDataKey: React.PropTypes.func,
+    selectDataKey: PropTypes.func,
 
-    pageSize: React.PropTypes.number,
+    pageSize: PropTypes.number,
 
     // redux props
-    sortKey: React.PropTypes.string,
-    sortOrder: React.PropTypes.number,
-    filterText: React.PropTypes.string,
-    currentPage: React.PropTypes.number,
+    sortKey: PropTypes.string,
+    sortOrder: PropTypes.number,
+    filterText: PropTypes.string,
+    currentPage: PropTypes.number,
 
-    init: React.PropTypes.func.isRequired,
-    changeSort: React.PropTypes.func.isRequired,
-    changeFilterText: React.PropTypes.func.isRequired,
-    goToPage: React.PropTypes.func.isRequired,
+    init: PropTypes.func.isRequired,
+    changeSort: PropTypes.func.isRequired,
+    changeFilterText: PropTypes.func.isRequired,
+    goToPage: PropTypes.func.isRequired,
 
-    sortedData: React.PropTypes.arrayOf(React.PropTypes.object),
+    sortedData: PropTypes.arrayOf(PropTypes.object),
   };
 
   static defaultProps = {
