@@ -160,6 +160,8 @@ export default class ReduxTable extends React.Component {
       <Pagination
         goToPage={this.onPageChange}
         currentPage={currentPage}
+        pageSize={pageSize}
+        recordCount={sortedData.length}
         />
     );
 
