@@ -144,6 +144,7 @@ export default class ReduxTable extends React.Component {
           <Cell
             key={selectDataKey(rowData) + key}
             value={rowData[key]}
+            rowValue={rowData}
             columnKey={key}
             sorting={sorting}
           />
