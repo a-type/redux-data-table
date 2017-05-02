@@ -20,6 +20,8 @@ class View extends React.Component {
       <ExampleTable
         data={this.props.data}
         loading={this.props.loading}
+        columnKeys={['id', 'name', 'lastLogin', 'bio']}
+        sortableColumnKeys={['id', 'name', 'bio']}
         />
     );
   }

@@ -50,6 +50,7 @@ import { ReduxTable } from 'redux-data-table';
   data={arrayOfData}
   columnKeys={orderedArrayOfKeys}
   selectDataKey={functionToProcessUniqueKeyFromRowData}
+  sortableColumnKeys={arrayOfColumnKeysWhichAreSortable}
   />
 ```
 
@@ -81,11 +82,13 @@ Props: `{ value, columnKey, sorting }`
 
 ### Header
 
-Props: `{ columnKey, handleClick, sortOrder, sorting }`
+Props: `{ columnKey, handleClick, sortOrder, sorting, sortable }`
 
 `columnKey` is the key for this column. You might render this directly, or prettify it somehow. `handleClick` must be attached to your element in order for clicking it to toggle column sorting. `sortOrder` indicates the sort order of this header's column. It's `0` if the table is not being sorted on this column, otherwise it's `1` or `-1`.
 
 `sorting` is the same as `Table`; a boolean that indicates if the table is currently sorting.
+
+`sortable` is true if the header is sortable. It's false if it's not. You can still bind `handleClick` on a non-sortable header, but nothing will happen when you click it.
 
 ### Filter
 
@@ -126,3 +129,7 @@ An array of string keys which correspond to the shape of your data. So if your d
 ### selectDataKey
 
 A function which is passed one of your data objects, and is expected to return a unique key to identify that object. For instance, if your data contains unique `id` props, your `selectDataKey` function might be `(data) => data.id`. But actually, the default behavior of redux-data-table would already work for you: first it tries `data.key`, then `data.id`, then `data.name`, and then it will stringify the whole data object. If your data doesn't have an `id`, `key`, or `name`, it's highly recommended you provide a `selectDataKey`.
+
+### sortableColumnKeys
+
+An array of string keys which indicate which columns should be sortable. If this prop is omitted, all columns are considered sortable.

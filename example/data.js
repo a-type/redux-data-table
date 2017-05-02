@@ -18,4 +18,5 @@ export default new Array(1000).fill(0).map((_, index) => ({
   name: `User ${Math.floor(Math.random() * 10000)}`,
   lastLogin: randomTime(),
   bio: lipsum({ count: 1, units: 'sentences' }),
+  invisible: 'don\'t show this!',
 }));

@@ -1,10 +1,10 @@
 import React from 'react';
 import SortArrow from './SortArrow';
 
-const Header = ({ columnKey, handleClick, sortOrder }) => (
-  <th style={{ cursor: 'pointer' }} onClick={handleClick}>
+const Header = ({ columnKey, handleClick, sortOrder, sortable }) => (
+  <th style={{ cursor: sortable ? 'pointer' : 'default' }} onClick={handleClick}>
     {columnKey}
-    <SortArrow order={sortOrder} />
+    {sortable ? <SortArrow order={sortOrder} /> : null}
   </th>
 );
 

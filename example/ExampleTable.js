@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from '../src/ReduxTable';
+import { ReduxTable as Table } from '../src';
 
 export default (props) => (
   <Table

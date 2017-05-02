@@ -52,6 +52,7 @@ export default class ReduxTable extends React.Component {
     columnKeys: null,
     sort: {},
     showFilter: true,
+    sortableColumnKeys: null,
 
     selectDataKey: (data) => data.key || data.id || data.name || JSON.stringify(data),
 
@@ -80,7 +81,12 @@ export default class ReduxTable extends React.Component {
   }
 
   onHeaderClick = (key) => {
-    const { sortOrder, sortKey, changeSort, tableName } = this.props;
+    const { sortOrder, sortKey, changeSort, tableName, sortableColumnKeys } = this.props;
+
+    if (sortableColumnKeys !== null && !sortableColumnKeys.includes(key)) {
+      // no-op, this column is not sortable
+      return;
+    }
 
     if (sortKey === key) {
       changeSort({ tableName, sortKey: key, sortOrder: -sortOrder });
@@ -121,6 +127,7 @@ export default class ReduxTable extends React.Component {
       sorting,
       pageSize,
       currentPage,
+      sortableColumnKeys,
     } = this.props;
 
     const columnKeys = this.props.columnKeys || Object.keys(data[0] || {}) || [];
@@ -134,6 +141,7 @@ export default class ReduxTable extends React.Component {
             handleClick={() => this.onHeaderClick(key)}
             sortOrder={sortKey === key ? sortOrder : 0}
             sorting={sorting}
+            sortable={sortableColumnKeys === null || sortableColumnKeys.includes(key)}
           />
         ))}
       </Row>
