@@ -1,5 +1,11 @@
 # redux-data-table
 
+## Notice
+
+Although it was a fairly usable solution for local data, I found that this approach to creating a table in Redux was not very compatible with data fetched from external sources. I also found that it's often better for an application to sort data in the Redux store in many circumstances, not locally in the table. Sorting data in the store means you can keep it consistent throughout the application and won't have to re-sort on each render. So I've concluded that this library may have been misguided for most use cases and won't be maintaining it. Perhaps poking through the code will give you some ideas for your own projects, but I wouldn't suggest picking it up for anything serious.
+
+
+
 Implementations of generic data tables with sorting and filtering are surprisingly hard to find in the React+Redux ecosystem. Here's a go at one.
 
 redux-data-table is designed to be easy to use, but not necessarily performant or opinionated. To get a basic table, you can go ahead and jump right in by passing only a `data` prop to your created form and see how it works. Most of the customization revolves around syling the presentational components of the table.
